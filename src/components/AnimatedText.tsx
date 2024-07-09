@@ -2,10 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import styled from "styled-components";
 
+interface AnimatedTextProps {
+  text: string;
+  speed?: number;
+  className?: string;
+  color?: string;
+}
+
 const AnimatedText: React.FC<AnimatedTextProps> = ({
   text,
   speed = 50,
   className = "",
+  color = "#000000",
 }) => {
   const [displayedText, setDisplayedText] = useState("");
   const controls = useAnimation();
@@ -38,6 +46,7 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
       className={className}
       initial={{ opacity: 1 }}
       animate={controls}
+      color={color}
     >
       {displayedText}
       <Cursor
@@ -51,15 +60,9 @@ const AnimatedText: React.FC<AnimatedTextProps> = ({
   );
 };
 
-interface AnimatedTextProps {
-  text: string;
-  speed?: number;
-  className?: string;
-}
-
-const StyledText = styled(motion.span)`
+const StyledText = styled(motion.span)<{ color: string }>`
   display: inline-block;
-  color: #1f2937;
+  color: ${(props) => props.color};
 `;
 
 const Cursor = styled(motion.span)`
